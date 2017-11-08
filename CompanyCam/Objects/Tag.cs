@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CompanyCam.Builders;
 using CompanyCam.Models;
+using CompanyCam.Objects;
 using CompanyCam.Services;
 using Newtonsoft.Json;
 
@@ -27,6 +28,10 @@ namespace CompanyCam
 
             var apiService = new ApiService();
             var response = await apiService.Client.GetAsync(url);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             var result = await response.Content.ReadAsAsync<List<Tag>>();
 
             return result;
@@ -36,14 +41,21 @@ namespace CompanyCam
         {
             var apiService = new ApiService();
             var response = await apiService.Client.PostAsJsonAsync("tags", newTag);
-
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             return await response.Content.ReadAsAsync<Tag>();
         }
 
-        public static async Task<Tag> GetSingleTag(string tagId)
+        public static async Task<Tag> Get(string tagId)
         {
             var apiService = new ApiService();
             var response = await apiService.Client.GetAsync($"tags/{tagId}");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             var result = await response.Content.ReadAsAsync<Tag>();
 
             return result;
@@ -53,7 +65,10 @@ namespace CompanyCam
         {
             var apiService = new ApiService();
             var response = await apiService.Client.PutAsJsonAsync($"tags/{tagId}", updatedTag);
-
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             return await response.Content.ReadAsAsync<Tag>();
         }
     }

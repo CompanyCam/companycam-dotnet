@@ -2,8 +2,8 @@
 {
     public class UserPhotoFilter
     {
-        public string UserId { get; set; }
-        public int? PerPage { get; set; }
-        public int? Page { get; set; }
+        public string userId { get; set; }
+        public int? per_page { get; set; }
+        public int? page { get; set; }
     }
 }

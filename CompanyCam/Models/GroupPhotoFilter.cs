@@ -2,8 +2,8 @@
 {
     public class GroupPhotoFilter
     {
-        public string GroupId { get; set; }
-        public int? PerPage { get; set; }
-        public int? Page { get; set; }
+        public string groupId { get; set; }
+        public int? per_page { get; set; }
+        public int? page { get; set; }
     }
 }

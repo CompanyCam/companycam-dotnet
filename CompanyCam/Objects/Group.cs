@@ -19,7 +19,7 @@ namespace CompanyCam
         #region properties
 
         public string id { get; set; }
-        public string company_id { get; set; }
+        public string companyId { get; set; }
         public string name { get; set; }
         public List<User> users { get; set; }
         public string status { get; set; }
@@ -36,10 +36,16 @@ namespace CompanyCam
             var url = QueryStringBuilder.BuildUrl("groups", model);
 
             var apiService = new ApiService();
-            var response = await apiService.Client.GetAsync(url);
-            var result = await response.Content.ReadAsAsync<List<Group>>();
 
+            var response = await apiService.Client.GetAsync(url);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
+            var result = await response.Content.ReadAsAsync<List<Group>>();
             return result;
+
+
         }
 
         public static async Task<Group> Create(Group group)
@@ -49,22 +55,35 @@ namespace CompanyCam
                 group = group
             };
             var apiService = new ApiService();
+
             var response = await apiService.Client.PostAsJsonAsync("groups/", wrapper);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             var result = await response.Content.ReadAsAsync<Group>();
 
             return result;
+
         }
 
-        public static async Task<Group> GetSingle(string groupId)
+        public static async Task<Group> Get(string groupId)
         {
             var apiService = new ApiService();
+
+
             var response = await apiService.Client.GetAsync($"groups/{groupId}");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             var result = await response.Content.ReadAsAsync<Group>();
 
             return result;
+
         }
 
-        public static async Task<bool> Update(string groupId, Group group)
+        public static async Task<Group> Update(string groupId, Group group)
         {
             var wrapper = new GroupWrapper()
             {
@@ -72,19 +91,50 @@ namespace CompanyCam
             };
             var apiService = new ApiService();
             var response = await apiService.Client.PutAsJsonAsync($"groups/{groupId}", wrapper);
-            var result = response.StatusCode;
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
+            var result = await response.Content.ReadAsAsync<Group>();
 
-            return result == HttpStatusCode.OK;
+            return result;
         }
 
         public static async Task<bool> Delete(string groupId)
         {
             var apiService = new ApiService();
             var response = await apiService.Client.DeleteAsync($"groups/{groupId}");
-
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             return response.StatusCode == HttpStatusCode.NoContent;
         }
 
-        #endregion 
+        public static async Task<Group> Create(CreateGroupOptions group)
+        {
+            var wrapper = new CreateGroupWrapper()
+            {
+                group = group
+            };
+            var apiService = new ApiService();
+            var response = await apiService.Client.PostAsJsonAsync("groups/", wrapper);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
+            var result = await response.Content.ReadAsAsync<Group>();
+            return result;
+        }
+
+        private class CreateGroupWrapper
+        {
+            public CreateGroupOptions group { get; set; }
+        }
+        private class GroupWrapper
+        {
+            public Group group { get; set; }
+        }
+        #endregion
     }
 }

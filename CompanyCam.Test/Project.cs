@@ -33,7 +33,7 @@ namespace CompanyCamSdk.Test
 
             var addr = new CompanyCam.Address()
             {
-                street_address_1 = "800 P ST",
+                street_address_1 = "800 A ST",
                 street_address_2 = "",
                 city = "",
                 state = "",
@@ -47,7 +47,7 @@ namespace CompanyCamSdk.Test
             var returnProject = await CompanyCam.Project.Update(_project);
 
             Assert.AreEqual(returnProject?.name, "Test Update");
-            Assert.AreEqual(returnProject?.address.street_address_1, "800 P ST");
+            Assert.AreEqual(returnProject?.address.street_address_1, "800 A ST");
         }
 
         [TestMethod]
@@ -64,9 +64,9 @@ namespace CompanyCamSdk.Test
         {
             var filters = new ProjectFilter()
             {
-                Page = 2,
-                PerPage = 5,
-                Status = "active"
+                page = 2,
+                per_page = 5,
+                status = Status.Active
             };
 
             var returnProjects = await CompanyCam.Project.GetAll(filters);

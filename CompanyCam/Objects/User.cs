@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CompanyCam.Builders;
 using CompanyCam.Models;
+using CompanyCam.Objects;
 using CompanyCam.Services;
 using Newtonsoft.Json;
 
@@ -36,15 +37,23 @@ namespace CompanyCam
 
             var apiService = new ApiService();
             var response = await apiService.Client.GetAsync(url);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             var result = await response.Content.ReadAsAsync<List<User>>();
 
             return result;
         }
 
-        public static async Task<User> GetSingle(string userId)
+        public static async Task<User> Get(string userId)
         {
             var apiService = new ApiService();
             var response = await apiService.Client.GetAsync($"users/{userId}");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             var result = await response.Content.ReadAsAsync<User>();
 
             return result;
@@ -54,7 +63,10 @@ namespace CompanyCam
         {
             var apiService = new ApiService();
             var response = await apiService.Client.PutAsJsonAsync($"users/{userId}", user);
-
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             return await response.Content.ReadAsAsync<User>();
 
         }
@@ -63,7 +75,10 @@ namespace CompanyCam
         {
             var apiService = new ApiService();
             var response = await apiService.Client.DeleteAsync($"users/{userId}");
-
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             return response.StatusCode == HttpStatusCode.NoContent;
         }
 
@@ -71,10 +86,34 @@ namespace CompanyCam
         {
             var apiService = new ApiService();
             var response = await apiService.Client.GetAsync($"users/current");
-            
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             return await response.Content.ReadAsAsync<User>();
         }
-        
+
+        public static async Task<User> Create(CreateUserOptions user)
+        {
+            var wrapper = new CreateUserWrapper()
+            {
+                user = user
+            };
+
+            var apiService = new ApiService();
+
+            var response = await apiService.Client.PostAsJsonAsync("users/", wrapper);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
+            return await response.Content.ReadAsAsync<User>();
+
+        }
+        private class CreateUserWrapper
+        {
+            public CreateUserOptions user { get; set; }
+        }
         #endregion
     }
 }

@@ -46,7 +46,7 @@ namespace CompanyCamSdk.Test
         {
             Assert.IsNotNull(_group?.id);
 
-            var group = await CompanyCam.Group.GetSingle(_group.id);
+            var group = await CompanyCam.Group.Get(_group.id);
 
             Assert.IsNotNull(group?.id);
         }
@@ -56,10 +56,10 @@ namespace CompanyCamSdk.Test
         {
             Assert.IsNotNull(_group?.id);
 
-            _group.name = "Poptarts";
+            _group.name = "Test123";
 
-            var responseCode = await CompanyCam.Group.Update(_group.id, _group);
-            Assert.IsTrue(responseCode);
+            var result = await CompanyCam.Group.Update(_group.id, _group);
+            Assert.IsTrue(result.name == "Test123");
         }
 
         [TestMethod]

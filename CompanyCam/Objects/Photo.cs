@@ -23,7 +23,7 @@ namespace CompanyCam
         public string creator_id { get; set; }
         public string creator_type { get; set; }
         public string creator_name { get; set; }
-        public int project_id { get; set; }
+        public int project_Id { get; set; }
         public string status { get; set; }
         public Coordinates coordinates { get; set; }
         public List<Uri> uris { get; set; }
@@ -44,6 +44,10 @@ namespace CompanyCam
 
             var apiService = new ApiService();
             var response = await apiService.Client.GetAsync(url);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             var result = await response.Content.ReadAsAsync<List<Photo>>();
 
             return result;
@@ -56,6 +60,10 @@ namespace CompanyCam
 
             var apiService = new ApiService();
             var response = await apiService.Client.GetAsync(url);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             var result = await response.Content.ReadAsAsync<List<Photo>>();
 
             return result;
@@ -69,21 +77,29 @@ namespace CompanyCam
             };
             var apiService = new ApiService();
             var response = await apiService.Client.PostAsJsonAsync($"projects/{projectId}/photos/", wrapper);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             var result = await response.Content.ReadAsAsync<Photo>();
 
             return result;
         }
 
-        public static async Task<Photo> GetSingle(string photoId)
+        public static async Task<Photo> Get(string photoId)
         {
             var apiService = new ApiService();
             var response = await apiService.Client.GetAsync($"photos/{photoId}");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             var result = await response.Content.ReadAsAsync<Photo>();
 
             return result;
         }
 
-        public static async Task<bool> Update(string photoId, Photo photo)
+        public static async Task<Photo> Update(string photoId, Photo photo)
         {
             var wrapper = new PhotoWrapper()
             {
@@ -91,18 +107,30 @@ namespace CompanyCam
             };
             var apiService = new ApiService();
             var response = await apiService.Client.PutAsJsonAsync($"photos/{photoId}", wrapper);
-            
-            return response.StatusCode == HttpStatusCode.OK;
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
+            var result = await response.Content.ReadAsAsync<Photo>();
+            return result;
         }
 
         public static async Task<bool> Delete(string photoId)
         {
             var apiService = new ApiService();
             var response = await apiService.Client.DeleteAsync($"photos/{photoId}");
-
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             return response.StatusCode == HttpStatusCode.NoContent;
         }
-        
+
+        private class PhotoWrapper
+        {
+            public Photo photo { get; set; }
+        }
+
         #endregion
     }
 }

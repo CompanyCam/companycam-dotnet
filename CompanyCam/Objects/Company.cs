@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using CompanyCam.Objects;
 using CompanyCam.Services;
 using Newtonsoft.Json;
 
@@ -17,15 +18,18 @@ namespace CompanyCam
         public Address address { get; set; }
         public List<Logo> logo { get; set; }
 
-        public static async Task<Company> GetSingle(string companyId)
+        public static async Task<Company> Get(string companyId)
         {
             var apiService = new ApiService();
             var response = await apiService.Client.GetAsync($"companies/{companyId}");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             var result = await response.Content.ReadAsAsync<Company>();
-
             return result;
         }
     }
 
-    
+
 }

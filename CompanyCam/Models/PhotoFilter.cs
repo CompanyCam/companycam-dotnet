@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CompanyCam.Objects;
 
 namespace CompanyCam.Models
 {
@@ -6,7 +7,7 @@ namespace CompanyCam.Models
     {
         public int? per_page { get; set; }
         public int? page { get; set; }
-        public string Status { get; set; }
+        public Status status { get; set; }
         public int? start_date { get; set; }
         public int? end_date { get; set; }
         public List<string> user_ids { get; set; }

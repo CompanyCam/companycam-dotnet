@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CompanyCam;
+using CompanyCam.Objects;
 using CompanyCam.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -22,7 +23,7 @@ namespace CompanyCamSdk.Test
             //Create Project
             var newProject = new CompanyCam.Project()
             {
-                name = "Agilx Office",
+                name = "Test Project",
                 address = new CompanyCam.Address()
                 {
                     street_address_1 = "",
@@ -37,10 +38,10 @@ namespace CompanyCamSdk.Test
                     lat = 40.8191702,
                     lon = -96.7119411
                 },
-                status = "active",
+                status = Status.Active,
                 feature_image = new List<FeatureImage>
                 {
-                    new FeatureImage(){type = "thumbnail", url = "http://www.agilx.com/wp-content/uploads/2013/04/companycam.png"}
+                    new FeatureImage(){type = "thumbnail", url = "https://raowj40442-flywheel.netdna-ssl.com/wp-content/uploads/2017/01/Artboard-1.png"}
                 }
             };
 
@@ -57,16 +58,16 @@ namespace CompanyCamSdk.Test
             Random rnd = new Random();
 
 
-            var newUser = new CreateUser()
+            var newUser = new CreateUserOptions()
             {
-                email_address = "keith.jett+" + rnd.Next(1, 1000).ToString() +  "@agilx.com",
-                first_name = "Keith",
-                last_name = "Jett",
-                password = "Password$1",
+                email_address = "test+" + rnd.Next(1, 100000).ToString() +  "@test.com",
+                first_name = "Mr",
+                last_name = "Test",
+                password = "PaSsWoRd",
                 phone_number = "1234567891"
             };
 
-            return await CompanyCam.CreateUser.Create(newUser);
+            return await CompanyCam.User.Create(newUser);
         }
 
         //Create Photo
@@ -116,12 +117,12 @@ namespace CompanyCamSdk.Test
             var userArray = new List<string>();
             userArray.Add(userId);
 
-            var newGroup = new CreateGroup()
+            var newGroup = new CreateGroupOptions()
             {
                 name = "Test Group " + rnd.Next(1,1000).ToString(),
                 users = userArray
             };
-            var result = await CompanyCam.CreateGroup.Create(newGroup);
+            var result = await CompanyCam.Group.Create(newGroup);
             return result;
         }
     }

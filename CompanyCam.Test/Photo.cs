@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using CompanyCam.Models;
+using CompanyCam.Objects;
 using CompanyCamSdk.Test;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -36,7 +37,7 @@ namespace CompanyCamSdk.Test
             {
                 per_page = 20,
                 page = 2,
-                Status = "active", 
+                status = Status.Active, 
             };
 
             var photos = await CompanyCam.Photo.GetAll(model);
@@ -49,7 +50,7 @@ namespace CompanyCamSdk.Test
             var model = new ProjectPhotoFilter()
             {
                 projectId = _project.id,
-                Status = "active",
+                status = Status.Active,
             };
 
             var photos = await CompanyCam.Photo.GetAllProject(model);
@@ -61,7 +62,7 @@ namespace CompanyCamSdk.Test
         {
             Assert.IsNotNull(_photo?.id);
 
-            var photo = await CompanyCam.Photo.GetSingle(_photo.id);
+            var photo = await CompanyCam.Photo.Get(_photo.id);
 
             Assert.IsNotNull(photo?.id);
         }
@@ -72,10 +73,10 @@ namespace CompanyCamSdk.Test
             
             Assert.IsNotNull(_photo?.id);
 
-            _photo.creator_name = "Frank";
+            _photo.@internal = true;
 
-            var responseCode = await CompanyCam.Photo.Update(_photo.id, _photo);
-            Assert.IsTrue(responseCode);
+            var photo = await CompanyCam.Photo.Update(_photo.id, _photo);
+            Assert.IsTrue(photo.@internal == true);
         }
 
         [TestMethod]

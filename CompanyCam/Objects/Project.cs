@@ -22,7 +22,7 @@ namespace CompanyCam
         public string creator_id { get; set; }
         public string creator_type { get; set; }
         public string creator_name { get; set; }
-        public string status { get; set; }
+        public Status status { get; set; }
         public string name { get; set; }
         public Address address { get; set; }
         public Coordinates coordinates { get; set; }
@@ -49,6 +49,10 @@ namespace CompanyCam
 
             var apiService = new ApiService();
             var response = await apiService.Client.GetAsync(url);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             var result = await response.Content.ReadAsAsync<List<Project>>();
 
             return result;
@@ -63,6 +67,10 @@ namespace CompanyCam
         {
             var apiService = new ApiService();
             var response = await apiService.Client.GetAsync($"projects/{id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             var result = await response.Content.ReadAsAsync<Project>();
 
             return result;
@@ -77,6 +85,10 @@ namespace CompanyCam
         {
             var apiService = new ApiService();
             var response = await apiService.Client.PostAsJsonAsync("projects", project);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             var result = await response.Content.ReadAsAsync<Project>();
 
             return result;
@@ -95,6 +107,10 @@ namespace CompanyCam
             };
             var apiService = new ApiService();
             var response = await apiService.Client.PutAsJsonAsync($"projects/{project.id}", wrapper);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             var result = await response.Content.ReadAsAsync<Project>();
 
             return result;
@@ -110,10 +126,16 @@ namespace CompanyCam
         {
             var apiService = new ApiService();
             var response = await apiService.Client.DeleteAsync($"projects/{id}");
-
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new CompanyCamException(response.StatusCode.ToString());
+            }
             return response.StatusCode == HttpStatusCode.NoContent;
         }
-
+        public class ProjectWrapper
+        {
+            public Project project { get; set; }
+        }
         #endregion
 
     }

@@ -22,8 +22,8 @@ namespace CompanyCamSdk.Test
         {
             var filters = new TagFilter()
             {
-               Page = 2,
-               PerPage = 5
+               page = 2,
+               per_page = 5
             };
 
             var tags = await CompanyCam.Tag.GetAllTags(filters);
@@ -40,7 +40,7 @@ namespace CompanyCamSdk.Test
         [TestMethod]
         public async Task GetTag()
         {
-            var tag = await CompanyCam.Tag.GetSingleTag(_tag.id);
+            var tag = await CompanyCam.Tag.Get(_tag.id);
             Assert.IsNotNull(tag?.id);
         }
 

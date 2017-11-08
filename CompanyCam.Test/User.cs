@@ -31,8 +31,8 @@ namespace CompanyCamSdk.Test
         {
             var filters = new UsersFilter()
             {
-                Page = 2,
-                PerPage = 5
+                page = 2,
+                per_page = 5
             };
             
             var users = await CompanyCam.User.ListAllUsers(filters);
@@ -43,7 +43,7 @@ namespace CompanyCamSdk.Test
         [TestMethod]
         public async Task GetUser()
         {
-            var user = await CompanyCam.User.GetSingle(_user.id);
+            var user = await CompanyCam.User.Get(_user.id);
 
             Assert.IsNotNull(user?.id);
         }
@@ -51,11 +51,11 @@ namespace CompanyCamSdk.Test
         [TestMethod]
         public async Task UpdateUser()
         {
-            _user.first_name = "Bill";
+            _user.first_name = "UpdateUser";
 
             var returnUser = await CompanyCam.User.Update(_user.id, _user);
 
-            Assert.AreEqual(returnUser?.first_name, "Bill");
+            Assert.AreEqual(returnUser?.first_name, "UpdateUser");
         }
 
         [TestMethod]

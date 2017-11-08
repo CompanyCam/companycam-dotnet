@@ -1,11 +1,13 @@
-﻿namespace CompanyCam.Models
+﻿using CompanyCam.Objects;
+
+namespace CompanyCam.Models
 {
     public class ProjectFilter
 
     {
-        public int? PerPage { get; set; }
-        public int? Page { get; set; }
-        public string Status { get; set; }
-        public string Query { get; set; }
+        public int? per_page { get; set; }
+        public int? page { get; set; }
+        public Status status { get; set; }
+        public string query { get; set; }
     }
 }
