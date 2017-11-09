@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CompanyCam.Models;
 using CompanyCam.Objects;
+using CompanyCam.Services;
 using CompanyCamSdk.Test;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,7 +13,7 @@ namespace CompanyCamSdk.Test
     public class Project
     {
 
-        public static CompanyCam.Project _project;
+        public static CompanyCam.Models.Project _project;
 
         [ClassInitialize()]
         public static async Task ClassInit(TestContext context)
@@ -23,7 +24,7 @@ namespace CompanyCamSdk.Test
         [TestMethod]
         public void CreateProject()
         {
-            Assert.IsNotNull(_project?.id);
+            Assert.IsNotNull(_project?.Id);
         }
 
         [TestMethod]
@@ -31,32 +32,32 @@ namespace CompanyCamSdk.Test
         {
            
 
-            var addr = new CompanyCam.Address()
+            var addr = new Address()
             {
-                street_address_1 = "800 A ST",
-                street_address_2 = "",
-                city = "",
-                state = "",
-                country = "US",
-                postal_code = ""
+                StreetAddress1 = "800 A ST",
+                StreetAddress2 = "",
+                City = "",
+                State = "",
+                Country = "US",
+                PostalCode = ""
             };
 
-            _project.address = addr;
-            _project.name = "Test Update";
+            _project.Address = addr;
+            _project.Name = "Test Update";
 
-            var returnProject = await CompanyCam.Project.Update(_project);
+            var returnProject = await new ProjectService().Update(_project);
 
-            Assert.AreEqual(returnProject?.name, "Test Update");
-            Assert.AreEqual(returnProject?.address.street_address_1, "800 A ST");
+            Assert.AreEqual(returnProject?.Name, "Test Update");
+            Assert.AreEqual(returnProject?.Address.StreetAddress1, "800 A ST");
         }
 
         [TestMethod]
         public async Task GetProject()
         {
             
-            var returnProject = await CompanyCam.Project.Get(_project.id);
+            var returnProject = await new ProjectService().Get(_project.Id);
 
-            Assert.AreEqual(returnProject?.id, _project.id);
+            Assert.AreEqual(returnProject?.Id, _project.Id);
         }
 
         [TestMethod]
@@ -64,12 +65,12 @@ namespace CompanyCamSdk.Test
         {
             var filters = new ProjectFilter()
             {
-                page = 2,
-                per_page = 5,
-                status = Status.Active
+                Page = 2,
+                PerPage = 5,
+                Status = Status.Active
             };
 
-            var returnProjects = await CompanyCam.Project.GetAll(filters);
+            var returnProjects = await new ProjectService().GetAll(filters);
 
             if (returnProjects.Count <= 0)
             {
@@ -80,7 +81,7 @@ namespace CompanyCamSdk.Test
         [TestMethod]
         public async Task DeleteProject()
         {
-            var responseCode = await CompanyCam.Project.Delete(_project.id);
+            var responseCode = await new ProjectService().Delete(_project.Id);
 
 
             Assert.IsTrue(responseCode);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CompanyCam;
+using CompanyCam.Models;
 using CompanyCam.Objects;
 using CompanyCam.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -13,105 +14,102 @@ namespace CompanyCamSdk.Test
     public class Helpers
     {
 
-        public static async Task<CompanyCam.Project> CreateProject()
+        public static async Task<CompanyCam.Models.Project> CreateProject()
         {
-            // set the static Api key
-            CompanyCam.Config.SetApiKey(TestConfiguration.Apikey);
-            // set the user email
-            CompanyCam.Config.SetUserEmail(TestConfiguration.UserEmail);
+            CompanyCam.CompanyCamConfiguration.SetApiKey(TestConfiguration.Apikey);
+            CompanyCam.CompanyCamConfiguration.SetUserEmail(TestConfiguration.UserEmail);
 
             //Create Project
-            var newProject = new CompanyCam.Project()
+            var newProject = new CompanyCam.Models.Project()
             {
-                name = "Test Project",
-                address = new CompanyCam.Address()
+                Name = "Test Project",
+                Address = new Address()
                 {
-                    street_address_1 = "",
-                    street_address_2 = "",
-                    city = "",
-                    postal_code = "",
-                    country = "US",
-                    state = ""
+                    StreetAddress1 = "",
+                    StreetAddress2 = "",
+                    City = "",
+                    PostalCode = "",
+                    Country = "US",
+                    State = ""
                 },
-                coordinates = new Coordinates()
+                Coordinates = new Coordinates()
                 {
-                    lat = 40.8191702,
-                    lon = -96.7119411
+                    Lat = 40.8191702,
+                    Lon = -96.7119411
                 },
-                status = Status.Active,
-                feature_image = new List<FeatureImage>
+                Status = Status.Active,
+                FeatureImage = new List<FeatureImage>
                 {
-                    new FeatureImage(){type = "thumbnail", url = "https://raowj40442-flywheel.netdna-ssl.com/wp-content/uploads/2017/01/Artboard-1.png"}
+                    new FeatureImage(){Type = "thumbnail", Url = "https://raowj40442-flywheel.netdna-ssl.com/wp-content/uploads/2017/01/Artboard-1.png"}
                 }
             };
 
-            return await CompanyCam.Project.Create(newProject);
+            return await new ProjectService().Create(newProject);
 
         }
 
         //Create User
-        public static async Task<CompanyCam.User> CreateUser()
+        public static async Task<CompanyCam.Models.User> CreateUser()
         {
-            CompanyCam.Config.SetApiKey(TestConfiguration.Apikey);
-            // set the user email
-            CompanyCam.Config.SetUserEmail(TestConfiguration.UserEmail);
+            CompanyCam.CompanyCamConfiguration.SetApiKey(TestConfiguration.Apikey);
+            CompanyCam.CompanyCamConfiguration.SetUserEmail(TestConfiguration.UserEmail);
+
             Random rnd = new Random();
-
-
+            
             var newUser = new CreateUserOptions()
             {
-                email_address = "test+" + rnd.Next(1, 100000).ToString() +  "@test.com",
-                first_name = "Mr",
-                last_name = "Test",
-                password = "PaSsWoRd",
-                phone_number = "1234567891"
+                EmailAddress = "test+" + rnd.Next(1, 100000).ToString() +  "@test.com",
+                FirstName = "Mr",
+                LastName = "Test",
+                Password = "PaSsWoRd",
+                PhoneNumber = "1234567891"
             };
 
-            return await CompanyCam.User.Create(newUser);
+            return await new UserService().Create(newUser);
         }
 
         //Create Photo
-        public static async Task<CompanyCam.Photo> CreatePhoto(string projectId)
+        public static async Task<CompanyCam.Models.Photo> CreatePhoto(string projectId)
         {
-            CompanyCam.Config.SetApiKey(TestConfiguration.Apikey);
-            // set the user email
-            CompanyCam.Config.SetUserEmail(TestConfiguration.UserEmail);
+            CompanyCam.CompanyCamConfiguration.SetApiKey(TestConfiguration.Apikey);
+            CompanyCam.CompanyCamConfiguration.SetUserEmail(TestConfiguration.UserEmail);
 
-            var newPhoto = new CompanyCam.Photo()
+            var newPhoto = new CompanyCam.Models.Photo()
             {
-                coordinates = new Coordinates()
+                Coordinates = new Coordinates()
                 {
-                    lat = 40.8191702,
-                    lon = -96.7119411
+                    Lat = 40.8191702,
+                    Lon = -96.7119411
                 },
-                captured_at = 1152230396,
-                uri = "http://www.agilx.com/wp-content/uploads/2013/04/companycam.png"
+                CapturedAt = 1152230396,
+                Uri = "http://www.agilx.com/wp-content/uploads/2013/04/companycam.png"
             };
 
-            return await CompanyCam.Photo.Create(projectId, newPhoto);
+            return await new PhotoService().Create(projectId, newPhoto);
         }
         
         //Create Tag
-        public static async Task<CompanyCam.Tag> CreateTag()
+        public static async Task<CompanyCam.Models.Tag> CreateTag()
         {
+            CompanyCam.CompanyCamConfiguration.SetApiKey(TestConfiguration.Apikey);
+            CompanyCam.CompanyCamConfiguration.SetUserEmail(TestConfiguration.UserEmail);
 
-            CompanyCam.Config.SetApiKey(TestConfiguration.Apikey);
-            CompanyCam.Config.SetUserEmail(TestConfiguration.UserEmail);
             Random rnd = new Random();
 
-            var newTag = new CompanyCam.Tag()
+            var newTag = new CompanyCam.Models.Tag()
             {
-                display_value = rnd.Next(1, 1000).ToString()
+                DisplayValue = rnd.Next(1, 1000).ToString()
             };
 
-            return await CompanyCam.Tag.CreateTag(newTag);
+            return await new TagService().Create(newTag);
         }
 
         //Create Group
-        public static async Task<CompanyCam.Group> CreateGroup(string userId)
+        public static async Task<CompanyCam.Models.Group> CreateGroup(string userId)
         {
-            CompanyCam.Config.SetApiKey(TestConfiguration.Apikey);
-            CompanyCam.Config.SetUserEmail(TestConfiguration.UserEmail);
+            CompanyCam.CompanyCamConfiguration.SetApiKey(TestConfiguration.Apikey);
+            CompanyCam.CompanyCamConfiguration.SetUserEmail(TestConfiguration.UserEmail);
+
             Random rnd = new Random();
 
             var userArray = new List<string>();
@@ -119,10 +117,10 @@ namespace CompanyCamSdk.Test
 
             var newGroup = new CreateGroupOptions()
             {
-                name = "Test Group " + rnd.Next(1,1000).ToString(),
-                users = userArray
+                Name = "Test Group " + rnd.Next(1,1000).ToString(),
+                Users = userArray
             };
-            var result = await CompanyCam.Group.Create(newGroup);
+            var result = await new GroupService().Create(newGroup);
             return result;
         }
     }
