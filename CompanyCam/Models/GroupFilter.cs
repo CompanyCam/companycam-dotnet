@@ -1,8 +1,12 @@
-﻿namespace CompanyCam.Models
+﻿using Newtonsoft.Json;
+
+namespace CompanyCam.Models
 {
     public class GroupFilter
     {
-        public int per_page { get; set; }
-        public int page { get; set; }
+        [JsonProperty("per_page")]
+        public int PerPage { get; set; }
+        [JsonProperty("page")]
+        public int Page { get; set; }
     }
 }

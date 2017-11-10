@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CompanyCam.Models;
+using CompanyCam.Services;
 using CompanyCamSdk.Test;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,7 +13,7 @@ namespace CompanyCamSdk.Test
     [TestClass]
     public class User
     {
-        public static CompanyCam.User _user;
+        public static CompanyCam.Models.User _user;
 
         [ClassInitialize()]
         public static async Task ClassInit(TestContext context)
@@ -23,7 +24,7 @@ namespace CompanyCamSdk.Test
         [TestMethod]
         public void CreateUser()
         {
-            Assert.IsNotNull(_user?.id);
+            Assert.IsNotNull(_user?.Id);
         }
 
         [TestMethod]
@@ -35,41 +36,41 @@ namespace CompanyCamSdk.Test
                 PerPage = 5
             };
             
-            var users = await CompanyCam.User.ListAllUsers(filters);
+            var users = await new UserService().GetAll(filters);
 
-            Assert.IsNotNull(users[0]?.id);
+            Assert.IsNotNull(users[0]?.Id);
         }
 
         [TestMethod]
         public async Task GetUser()
         {
-            var user = await CompanyCam.User.GetSingle(_user.id);
+            var user = await new UserService().Get(_user.Id);
 
-            Assert.IsNotNull(user?.id);
+            Assert.IsNotNull(user?.Id);
         }
 
         [TestMethod]
         public async Task UpdateUser()
         {
-            _user.first_name = "Bill";
+            _user.FirstName = "UpdateUser";
 
-            var returnUser = await CompanyCam.User.Update(_user.id, _user);
+            var returnUser = await new UserService().Update(_user.Id, _user);
 
-            Assert.AreEqual(returnUser?.first_name, "Bill");
+            Assert.AreEqual(returnUser?.FirstName, "UpdateUser");
         }
 
         [TestMethod]
         public async Task GetCurrentUser()
         {
-            var user = await CompanyCam.User.GetCurrent();
+            var user = await new UserService().GetCurrent();
 
-            Assert.IsNotNull(user?.id);
+            Assert.IsNotNull(user?.Id);
         }
 
         [TestMethod]
         public async Task DeleteUser()
         {
-            var response = await CompanyCam.User.Delete(_user.id);
+            var response = await new UserService().Delete(_user.Id);
 
             Assert.IsTrue(response);
         }

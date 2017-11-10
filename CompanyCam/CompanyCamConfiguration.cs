@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using CompanyCam.Services;
 
 namespace CompanyCam
 {
-    public static class Config
+    public static class CompanyCamConfiguration
     {
-        public static string ApiKey { get; set; }
-        public static string UserEmailAddress { get; set; }
+        private static string _apiKey { get; set; }
+        private static string _userEmailAddress { get; set; }
 
         /// <summary>
         /// Sets a static CompanyCam API key
@@ -18,7 +19,7 @@ namespace CompanyCam
         /// <param name="apiKey"></param>
         public static void SetApiKey(string apiKey)
         {
-            ApiKey = apiKey;
+            _apiKey = apiKey;
         }
 
         /// <summary>
@@ -27,7 +28,17 @@ namespace CompanyCam
         /// <param name="userEmail"></param>
         public static void SetUserEmail(string userEmail)
         {
-            UserEmailAddress = userEmail;
+            _userEmailAddress = userEmail;
+        }
+
+        internal static string GetApiKey()
+        {
+            return _apiKey;
+        }
+
+        internal static string GetUserEmail()
+        {
+            return _userEmailAddress;
         }
     }
 }

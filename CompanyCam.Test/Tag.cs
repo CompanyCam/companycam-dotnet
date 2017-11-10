@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CompanyCam.Models;
+using CompanyCam.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CompanyCamSdk.Test
@@ -8,7 +9,7 @@ namespace CompanyCamSdk.Test
     [TestClass]
     public class Tag
     {
-        public static CompanyCam.Tag _tag;
+        public static CompanyCam.Models.Tag _tag;
 
 
         [ClassInitialize()]
@@ -26,22 +27,22 @@ namespace CompanyCamSdk.Test
                PerPage = 5
             };
 
-            var tags = await CompanyCam.Tag.GetAllTags(filters);
+            var tags = await new TagService().GetAll(filters);
 
-            Assert.IsNotNull(tags[0]?.id);
+            Assert.IsNotNull(tags[0]?.Id);
         }
 
         [TestMethod]
         public void CreateTag()
         {
-            Assert.IsNotNull(_tag.id);
+            Assert.IsNotNull(_tag.Id);
         }
 
         [TestMethod]
         public async Task GetTag()
         {
-            var tag = await CompanyCam.Tag.GetSingleTag(_tag.id);
-            Assert.IsNotNull(tag?.id);
+            var tag = await new TagService().Get(_tag.Id);
+            Assert.IsNotNull(tag?.Id);
         }
 
         [TestMethod]
@@ -50,14 +51,14 @@ namespace CompanyCamSdk.Test
             Random rnd = new Random();
             var newValue = rnd.Next(1, 1000).ToString();
 
-            var newTag = new CompanyCam.Tag()
+            var newTag = new CompanyCam.Models.Tag()
             {
-                display_value = newValue
+                DisplayValue = newValue
             };
 
-            var tag = await CompanyCam.Tag.UpdateTag(_tag.id, newTag);
+            var tag = await new TagService().Update(_tag.Id, newTag);
 
-            Assert.AreEqual(tag.display_value, newValue);
+            Assert.AreEqual(tag.DisplayValue, newValue);
         }
     }
 }

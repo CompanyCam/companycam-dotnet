@@ -19,11 +19,13 @@ System.Net.Http (4.3.3 or newer)
 
 ## General Use
 
-Before making any call, you must set your API key and user email. Do this with the following code:
+Before making any call, you must set your API key and user email. 
+
+Use the following code before any calls are made.
 
 ```
 CompanyCam.Config.SetApiKey("ApiKeyHere");
-CompanyCam.Confi.SetUserEmail("UserEmailHere");
+CompanyCam.Config.SetUserEmail("UserEmailHere");
 ```
 
 Your API key can be found on CompanyCam's website under Your Company > Account > Access Tokens.
@@ -50,6 +52,20 @@ var groups = CompanyCam.Group.GetAll(filter);
 ```
 
 If a filter is not used, then the default page of 1 and per_page of 25 is used instead.
+
+
+## Testing
+
+In order to use to use the included tests, you must use your own API key and user email.
+Do this by creating a static class within the test project with the following code:
+
+```
+public static class TestConfiguration
+{
+    public const string Apikey = "KEY-HERE";
+    public const string UserEmail = "USER-EMAIL-HERE";
+}
+```
 
 
 ## Built With

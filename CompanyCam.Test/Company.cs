@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CompanyCam.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CompanyCamSdk.Test
@@ -12,16 +13,15 @@ namespace CompanyCamSdk.Test
         [ClassInitialize()]
         public static async Task ClassInit(TestContext context)
         {
-            CompanyCam.Config.SetApiKey(TestConfiguration.Apikey);
-            CompanyCam.Config.SetUserEmail(TestConfiguration.UserEmail);
+            CompanyCam.CompanyCamConfiguration.SetApiKey(TestConfiguration.Apikey);
+            CompanyCam.CompanyCamConfiguration.SetUserEmail(TestConfiguration.UserEmail);
         }
         [TestMethod]
         public async Task GetSingleCompany()
         {
-            //var company = await CompanyCam.Company.GetSingle("3SwM_yt9");
-            var company = await CompanyCam.Company.GetSingle("201549");
+            var company = await new CompanyService().Get("201549");
 
-            Assert.IsNotNull(company?.id);
+            Assert.IsNotNull(company?.Id);
         }
     }
 }

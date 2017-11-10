@@ -12,7 +12,7 @@ namespace CompanyCam.Builders
     {
         public string BuildProjectPhotoUrl(ProjectPhotoFilter model)
         {
-            var url = $"projects/{model.projectId}/photos";
+            var url = $"projects/{model.ProjectId}/photos";
             var extra = QueryStringBuilder.GetQueryString(model);
             if (extra != null)
             {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CompanyCam.Models;
+using CompanyCam.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CompanyCamSdk.Test
@@ -11,20 +12,20 @@ namespace CompanyCamSdk.Test
     [TestClass]
     public class Group
     {
-        public static CompanyCam.User _user;
-        public static CompanyCam.Group _group;
+        public static CompanyCam.Models.User _user;
+        public static CompanyCam.Models.Group _group;
 
         [ClassInitialize()]
         public static async Task ClassInit(TestContext context)
         {
             _user = await Helpers.CreateUser();
-            _group =  await Helpers.CreateGroup(_user?.id);
+            _group =  await Helpers.CreateGroup(_user?.Id);
         }
 
         [TestMethod]
         public void CreateGroup()
         {
-            Assert.IsNotNull(_group?.id);
+            Assert.IsNotNull(_group?.Id);
         }
 
         [TestMethod]
@@ -32,11 +33,11 @@ namespace CompanyCamSdk.Test
         {
             var filter = new GroupFilter()
             {
-                page = 1,
-                per_page = 25
+                Page = 1,
+                PerPage = 25
             };
 
-            var groups = await CompanyCam.Group.GetAll(filter);
+            var groups = await new GroupService().GetAll(filter);
 
             Assert.IsNotNull(groups);
         }
@@ -44,30 +45,30 @@ namespace CompanyCamSdk.Test
         [TestMethod]
         public async Task GetSingleGroup()
         {
-            Assert.IsNotNull(_group?.id);
+            Assert.IsNotNull(_group?.Id);
 
-            var group = await CompanyCam.Group.GetSingle(_group.id);
+            var group = await new GroupService().Get(_group.Id);
 
-            Assert.IsNotNull(group?.id);
+            Assert.IsNotNull(group?.Id);
         }
 
         [TestMethod]
         public async Task UpdateGroup()
         {
-            Assert.IsNotNull(_group?.id);
+            Assert.IsNotNull(_group?.Id);
 
-            _group.name = "Poptarts";
+            _group.Name = "Test123";
 
-            var responseCode = await CompanyCam.Group.Update(_group.id, _group);
-            Assert.IsTrue(responseCode);
+            var result = await new GroupService().Update(_group.Id, _group);
+            Assert.IsTrue(result.Name == "Test123");
         }
 
         [TestMethod]
         public async Task DeleteGroup()
         {
-            Assert.IsNotNull(_group?.id);
+            Assert.IsNotNull(_group?.Id);
 
-            var responseCode = await CompanyCam.Group.Delete(_group.id);
+            var responseCode = await new GroupService().Delete(_group.Id);
             Assert.IsTrue(responseCode);
         }
         
