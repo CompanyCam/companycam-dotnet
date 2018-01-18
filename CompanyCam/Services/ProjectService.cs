@@ -18,7 +18,7 @@ namespace CompanyCam.Services
         /// Get all project for company
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Project>> GetAll(ProjectFilter model)
+        public async Task<List<Project>> List(ProjectFilter model)
         {
 
             var url = QueryStringBuilder.BuildUrl("projects", model);

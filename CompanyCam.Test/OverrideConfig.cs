@@ -25,7 +25,7 @@ namespace CompanyCamSdk.Test
 
             try
             {
-                await service.GetAll(new ProjectFilter());
+                await service.List(new ProjectFilter());
             }
             catch (CompanyCamException companyCamException)
             {

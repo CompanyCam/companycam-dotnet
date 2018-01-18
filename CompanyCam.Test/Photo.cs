@@ -41,7 +41,7 @@ namespace CompanyCamSdk.Test
                 Status = Status.Active, 
             };
 
-            var photos = await new PhotoService().GetAll(model);
+            var photos = await new PhotoService().List(model);
             Assert.IsTrue(photos.Count >= 1);
         }
 
@@ -54,7 +54,7 @@ namespace CompanyCamSdk.Test
                 Status = Status.Active,
             };
 
-            var photos = await new ProjectPhotoService().GetAll(model);
+            var photos = await new ProjectPhotoService().List(model);
             Assert.IsTrue(photos.Count >= 1);
         }
 

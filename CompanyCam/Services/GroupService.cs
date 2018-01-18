@@ -15,7 +15,7 @@ namespace CompanyCam.Services
         public GroupService(CompanyCamRequestOptions options = null) : base(options) { }
 
 
-        public async Task<List<Group>> GetAll(GroupFilter model)
+        public async Task<List<Group>> List(GroupFilter model)
         {
             var url = QueryStringBuilder.BuildUrl("groups", model);
 

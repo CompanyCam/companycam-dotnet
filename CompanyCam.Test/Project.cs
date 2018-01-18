@@ -70,7 +70,7 @@ namespace CompanyCamSdk.Test
                 Status = Status.Active
             };
 
-            var returnProjects = await new ProjectService().GetAll(filters);
+            var returnProjects = await new ProjectService().List(filters);
 
             if (returnProjects.Count <= 0)
             {

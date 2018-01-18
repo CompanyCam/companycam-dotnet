@@ -62,7 +62,7 @@ namespace CompanyCamSdk.Test
                 FirstName = "Mr",
                 LastName = "Test",
                 Password = "PaSsWoRd",
-                PhoneNumber = "1234567891"
+                PhoneNumber = "4025551212"
             };
 
             return await new UserService().Create(newUser);

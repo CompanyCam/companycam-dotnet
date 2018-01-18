@@ -14,7 +14,7 @@ namespace CompanyCam.Services
     {
         public PhotoService(CompanyCamRequestOptions options = null) : base(options) { }
         
-        public async Task<List<Photo>> GetAll(PhotoFilter model)
+        public async Task<List<Photo>> List(PhotoFilter model)
         {
             var url = QueryStringBuilder.BuildUrl("photos", model);
 

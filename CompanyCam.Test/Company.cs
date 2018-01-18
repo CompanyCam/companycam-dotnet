@@ -19,7 +19,7 @@ namespace CompanyCamSdk.Test
         [TestMethod]
         public async Task GetSingleCompany()
         {
-            var company = await new CompanyService().Get("201549");
+            var company = await new CompanyService().Get("8");
 
             Assert.IsNotNull(company?.Id);
         }

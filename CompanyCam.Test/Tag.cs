@@ -27,7 +27,7 @@ namespace CompanyCamSdk.Test
                PerPage = 5
             };
 
-            var tags = await new TagService().GetAll(filters);
+            var tags = await new TagService().List(filters);
 
             Assert.IsNotNull(tags[0]?.Id);
         }

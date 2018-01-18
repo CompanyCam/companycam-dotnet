@@ -37,7 +37,7 @@ namespace CompanyCamSdk.Test
                 PerPage = 25
             };
 
-            var groups = await new GroupService().GetAll(filter);
+            var groups = await new GroupService().List(filter);
 
             Assert.IsNotNull(groups);
         }

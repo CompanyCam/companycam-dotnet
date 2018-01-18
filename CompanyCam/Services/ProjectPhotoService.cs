@@ -13,7 +13,7 @@ namespace CompanyCam.Services
     {
         public ProjectPhotoService(CompanyCamRequestOptions options = null) : base(options) { }
 
-        public async Task<List<Photo>> GetAll(ProjectPhotoFilter model)
+        public async Task<List<Photo>> List(ProjectPhotoFilter model)
         {
             var builder = new PhotoUrlBuilder();
             var url = builder.BuildProjectPhotoUrl(model);

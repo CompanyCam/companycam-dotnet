@@ -14,7 +14,7 @@ namespace CompanyCam.Services
     {
         public UserService(CompanyCamRequestOptions options = null) : base(options) { }
         
-        public async Task<List<User>> GetAll(UsersFilter model)
+        public async Task<List<User>> List(UsersFilter model)
         {
             var url = QueryStringBuilder.BuildUrl("users", model);
 

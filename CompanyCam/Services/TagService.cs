@@ -13,7 +13,7 @@ namespace CompanyCam.Services
     {
         public TagService(CompanyCamRequestOptions options = null) : base(options) { }
 
-        public async Task<List<Tag>> GetAll(TagFilter model)
+        public async Task<List<Tag>> List(TagFilter model)
         {
             var url = QueryStringBuilder.BuildUrl("tags", model);
 

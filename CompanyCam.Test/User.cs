@@ -36,7 +36,7 @@ namespace CompanyCamSdk.Test
                 PerPage = 5
             };
             
-            var users = await new UserService().GetAll(filters);
+            var users = await new UserService().List(filters);
 
             Assert.IsNotNull(users[0]?.Id);
         }
