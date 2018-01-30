@@ -21,8 +21,6 @@ namespace CompanyCam.Models
         public List<ProfileImage> ProfileImage { get; set; }
         [JsonProperty("phone_number")]
         public string PhoneNumber { get; set; }
-        [JsonProperty("role")]
-        public Role Role { get; set; }
         [JsonProperty("created_at")]
         public int CreatedAt { get; set; }
         [JsonProperty("updated_at")]
