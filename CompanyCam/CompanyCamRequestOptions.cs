@@ -7,6 +7,7 @@ namespace CompanyCam
     public class CompanyCamRequestOptions
     {
         public string ApiKey { get; set; }
+        public string SecretKey { get; set; }
         public string UserEmailAddress { get; set; }
     }
 }

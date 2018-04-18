@@ -16,7 +16,8 @@ namespace CompanyCamSdk.Test
 
         public static async Task<CompanyCam.Models.Project> CreateProject()
         {
-            CompanyCam.CompanyCamConfiguration.SetApiKey(TestConfiguration.Apikey);
+			CompanyCam.CompanyCamConfiguration.SetApiKey(TestConfiguration.Apikey);
+            CompanyCam.CompanyCamConfiguration.SetApiKey(TestConfiguration.SecretKey);
             CompanyCam.CompanyCamConfiguration.SetUserEmail(TestConfiguration.UserEmail);
 
             //Create Project
@@ -52,6 +53,7 @@ namespace CompanyCamSdk.Test
         public static async Task<CompanyCam.Models.User> CreateUser()
         {
             CompanyCam.CompanyCamConfiguration.SetApiKey(TestConfiguration.Apikey);
+            CompanyCam.CompanyCamConfiguration.SetApiKey(TestConfiguration.SecretKey);
             CompanyCam.CompanyCamConfiguration.SetUserEmail(TestConfiguration.UserEmail);
 
             Random rnd = new Random();
@@ -72,6 +74,7 @@ namespace CompanyCamSdk.Test
         public static async Task<CompanyCam.Models.Photo> CreatePhoto(string projectId)
         {
             CompanyCam.CompanyCamConfiguration.SetApiKey(TestConfiguration.Apikey);
+            CompanyCam.CompanyCamConfiguration.SetApiKey(TestConfiguration.SecretKey);
             CompanyCam.CompanyCamConfiguration.SetUserEmail(TestConfiguration.UserEmail);
 
             var newPhoto = new CompanyCam.Models.Photo()
@@ -92,6 +95,7 @@ namespace CompanyCamSdk.Test
         public static async Task<CompanyCam.Models.Tag> CreateTag()
         {
             CompanyCam.CompanyCamConfiguration.SetApiKey(TestConfiguration.Apikey);
+            CompanyCam.CompanyCamConfiguration.SetApiKey(TestConfiguration.SecretKey);
             CompanyCam.CompanyCamConfiguration.SetUserEmail(TestConfiguration.UserEmail);
 
             Random rnd = new Random();
@@ -108,6 +112,7 @@ namespace CompanyCamSdk.Test
         public static async Task<CompanyCam.Models.Group> CreateGroup(string userId)
         {
             CompanyCam.CompanyCamConfiguration.SetApiKey(TestConfiguration.Apikey);
+            CompanyCam.CompanyCamConfiguration.SetApiKey(TestConfiguration.SecretKey);
             CompanyCam.CompanyCamConfiguration.SetUserEmail(TestConfiguration.UserEmail);
 
             Random rnd = new Random();

@@ -22,6 +22,7 @@ namespace CompanyCam.Services
             {
                 BaseAddress = new System.Uri(url)
             };
+            this.Client.DefaultRequestHeaders.Add("X-CompanyCam-Secret", Options?.SecretKey ?? CompanyCamConfiguration.GetSecretKey());
             this.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Options?.ApiKey ?? CompanyCamConfiguration.GetApiKey());
             this.Client.DefaultRequestHeaders.Add("X-CompanyCam-User", Options?.UserEmailAddress ?? CompanyCamConfiguration.GetUserEmail());
             this.Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

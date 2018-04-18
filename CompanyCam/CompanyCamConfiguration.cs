@@ -11,6 +11,7 @@ namespace CompanyCam
     public static class CompanyCamConfiguration
     {
         private static string _apiKey { get; set; }
+        private static string _secretKey { get; set; }
         private static string _userEmailAddress { get; set; }
 
         /// <summary>
@@ -20,6 +21,15 @@ namespace CompanyCam
         public static void SetApiKey(string apiKey)
         {
             _apiKey = apiKey;
+        }
+
+        /// <summary>
+        /// Sets a static CompanyCam Secret key
+        /// </summary>
+        /// <param name="secretKey"></param>
+        public static void SetSecretKey(string secretKey)
+        {
+            _secretKey = secretKey;
         }
 
         /// <summary>
@@ -34,6 +44,11 @@ namespace CompanyCam
         internal static string GetApiKey()
         {
             return _apiKey;
+        }
+
+        internal static string GetSecretKey()
+        {
+            return _secretKey;
         }
 
         internal static string GetUserEmail()
