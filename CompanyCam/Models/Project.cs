@@ -14,6 +14,8 @@ namespace CompanyCam.Models
         public string CreatorId { get; set; }
         [JsonProperty("creator_type")]
         public string CreatorType { get; set; }
+        [JsonProperty("integration_relation_id")]
+        public string IntegrationRelationId { get; set; }
         [JsonProperty("creator_name")]
         public string CreatorName { get; set; }
         [JsonProperty("status")]
