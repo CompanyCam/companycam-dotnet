@@ -23,8 +23,6 @@ namespace CompanyCam.Models
         public Coordinates Coordinates { get; set; }
         [JsonProperty("uris")]
         public List<Uri> Uris { get; set; }
-        [JsonProperty("uri")]
-        public string Uri { get; set; }
         [JsonProperty("hash")]
         public string Hash { get; set; }
         [JsonProperty("internal")]
