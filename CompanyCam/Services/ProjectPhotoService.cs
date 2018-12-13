@@ -15,6 +15,7 @@ namespace CompanyCam.Services
 
         public async Task<List<Photo>> List(ProjectPhotoFilter model)
         {
+            this.SetHeaders();
             var builder = new PhotoUrlBuilder();
             var url = builder.BuildProjectPhotoUrl(model);
 

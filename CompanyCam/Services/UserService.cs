@@ -16,6 +16,7 @@ namespace CompanyCam.Services
         
         public async Task<List<User>> List(UsersFilter model)
         {
+            this.SetHeaders();
             var url = QueryStringBuilder.BuildUrl("users", model);
 
             var response = await Client.GetAsync(url);
@@ -27,6 +28,7 @@ namespace CompanyCam.Services
 
         public async Task<User> Get(string userId)
         {
+            this.SetHeaders();
             var response = await Client.GetAsync($"users/{userId}");
             HandleResponse(response);
             var result = await response.Content.ReadAsAsync<User>();
@@ -36,6 +38,7 @@ namespace CompanyCam.Services
 
         public async Task<User> Update(string userId, User user)
         {
+            this.SetHeaders();
             var response = await Client.PutAsJsonAsync($"users/{userId}", user);
             HandleResponse(response);
             return await response.Content.ReadAsAsync<User>();
@@ -44,6 +47,7 @@ namespace CompanyCam.Services
 
         public async Task<bool> Delete(string userId)
         {
+            this.SetHeaders();
             var response = await Client.DeleteAsync($"users/{userId}");
             HandleResponse(response);
             return response.StatusCode == HttpStatusCode.NoContent;
@@ -51,6 +55,7 @@ namespace CompanyCam.Services
 
         public async Task<User> GetCurrent()
         {
+            this.SetHeaders();
             var response = await Client.GetAsync($"users/current");
             HandleResponse(response);
             return await response.Content.ReadAsAsync<User>();
@@ -58,6 +63,7 @@ namespace CompanyCam.Services
 
         public async Task<User> Create(CreateUserOptions user)
         {
+            this.SetHeaders();
             var wrapper = new CreateUserWrapper()
             {
                 user = user

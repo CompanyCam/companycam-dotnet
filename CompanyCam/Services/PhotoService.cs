@@ -16,6 +16,7 @@ namespace CompanyCam.Services
         
         public async Task<List<Photo>> List(PhotoFilter model)
         {
+            this.SetHeaders();
             var url = QueryStringBuilder.BuildUrl("photos", model);
 
             var response = await Client.GetAsync(url);
@@ -27,6 +28,7 @@ namespace CompanyCam.Services
         
         public async Task<Photo> Create(string projectId, Photo photo)
         {
+            this.SetHeaders();
             var wrapper = new PhotoWrapper()
             {
                 photo = photo
@@ -41,6 +43,7 @@ namespace CompanyCam.Services
 
         public async Task<Photo> Get(string photoId)
         {
+            this.SetHeaders();
             var response = await Client.GetAsync($"photos/{photoId}");
             HandleResponse(response);
             var result = await response.Content.ReadAsAsync<Photo>();
@@ -50,6 +53,7 @@ namespace CompanyCam.Services
 
         public async Task<Photo> Update(string photoId, Photo photo)
         {
+            this.SetHeaders();
             var wrapper = new PhotoWrapper()
             {
                 photo = photo
@@ -63,6 +67,7 @@ namespace CompanyCam.Services
 
         public async Task<bool> Delete(string photoId)
         {
+            this.SetHeaders();
             var response = await Client.DeleteAsync($"photos/{photoId}");
             HandleResponse(response);
             return response.StatusCode == HttpStatusCode.NoContent;

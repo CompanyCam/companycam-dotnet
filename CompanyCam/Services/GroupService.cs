@@ -17,6 +17,7 @@ namespace CompanyCam.Services
 
         public async Task<List<Group>> List(GroupFilter model)
         {
+            this.SetHeaders();
             var url = QueryStringBuilder.BuildUrl("groups", model);
 
             var response = await Client.GetAsync(url);
@@ -29,6 +30,7 @@ namespace CompanyCam.Services
 
         public async Task<Group> Get(string groupId)
         {
+            this.SetHeaders();
             var response = await Client.GetAsync($"groups/{groupId}");
             HandleResponse(response);
             var result = await response.Content.ReadAsAsync<Group>();
@@ -39,6 +41,7 @@ namespace CompanyCam.Services
 
         public async Task<Group> Update(string groupId, Group group)
         {
+            this.SetHeaders();
             var wrapper = new GroupWrapper()
             {
                 group = group
@@ -53,6 +56,7 @@ namespace CompanyCam.Services
 
         public async Task<bool> Delete(string groupId)
         {
+            this.SetHeaders();
             var response = await Client.DeleteAsync($"groups/{groupId}");
             HandleResponse(response);
             return response.StatusCode == HttpStatusCode.NoContent;
@@ -60,6 +64,7 @@ namespace CompanyCam.Services
 
         public async Task<Group> Create(CreateGroupOptions group)
         {
+            this.SetHeaders();
             var wrapper = new CreateGroupWrapper()
             {
                 group = group

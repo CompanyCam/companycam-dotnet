@@ -14,6 +14,7 @@ namespace CompanyCam.Services
 
         public async Task<Company> Get(string companyId)
         {
+            this.SetHeaders();
             var response = await Client.GetAsync($"companies/{companyId}");
             HandleResponse(response);
             var result = await response.Content.ReadAsAsync<Company>();
