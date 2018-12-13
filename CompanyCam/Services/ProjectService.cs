@@ -22,7 +22,7 @@ namespace CompanyCam.Services
         {
 
             var url = QueryStringBuilder.BuildUrl("projects", model);
-
+            this.SetHeaders();
             var response = await Client.GetAsync(url);
             HandleResponse(response);
             var result = await response.Content.ReadAsAsync<List<Project>>();
@@ -37,6 +37,7 @@ namespace CompanyCam.Services
         /// <returns></returns>
         public async Task<Project> Get(string id)
         {
+            this.SetHeaders();
             var response = await Client.GetAsync($"projects/{id}");
             HandleResponse(response);
             var result = await response.Content.ReadAsAsync<Project>();
@@ -51,6 +52,7 @@ namespace CompanyCam.Services
         /// <returns></returns>
         public async Task<Project> Create(Project project)
         {
+            this.SetHeaders();
             var response = await Client.PostAsJsonAsync("projects", project);
             HandleResponse(response);
             var result = await response.Content.ReadAsAsync<Project>();
@@ -69,6 +71,7 @@ namespace CompanyCam.Services
             {
                 project = project
             };
+            this.SetHeaders();
             var response = await Client.PutAsJsonAsync($"projects/{project.Id}", wrapper);
             HandleResponse(response);
             var result = await response.Content.ReadAsAsync<Project>();
@@ -84,6 +87,7 @@ namespace CompanyCam.Services
         /// <returns></returns>
         public async Task<bool> Delete(string id)
         {
+            this.SetHeaders();
             var response = await Client.DeleteAsync($"projects/{id}");
             HandleResponse(response);
             return response.StatusCode == HttpStatusCode.NoContent;

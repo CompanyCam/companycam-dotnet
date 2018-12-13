@@ -22,12 +22,18 @@ namespace CompanyCam.Services
             {
                 BaseAddress = new System.Uri(url)
             };
+            this.SetHeaders();
+        }
+        protected void SetHeaders()
+        {
+            this.Client.DefaultRequestHeaders.Clear();
             this.Client.DefaultRequestHeaders.Add("X-CompanyCam-Secret", Options?.SecretKey ?? CompanyCamConfiguration.GetSecretKey());
             this.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Options?.ApiKey ?? CompanyCamConfiguration.GetApiKey());
             this.Client.DefaultRequestHeaders.Add("X-CompanyCam-User", Options?.UserEmailAddress ?? CompanyCamConfiguration.GetUserEmail());
             this.Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        }
 
+
+        }
         internal static void HandleResponse(HttpResponseMessage response)
         {
             if (!response.IsSuccessStatusCode)
