@@ -33,5 +33,7 @@ namespace CompanyCam.Models
         public int CreatedAt { get; set; }
         [JsonProperty("updated_at")]
         public int UpdatedAt { get; set; }
+        [JsonProperty("processing_status")]
+        public string ProcessingStatus { get; set; }
     }
 }
