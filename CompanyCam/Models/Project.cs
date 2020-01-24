@@ -35,7 +35,7 @@ namespace CompanyCam.Models
         [JsonProperty("slug")]
         public string Slug { get; set; }
         [JsonProperty("public")]
-        public bool Public { get; set; }
+        public bool? Public { get; set; }
         [JsonProperty("created_at")]
         public int CreatedAt { get; set; }
         [JsonProperty("updated_at")]
