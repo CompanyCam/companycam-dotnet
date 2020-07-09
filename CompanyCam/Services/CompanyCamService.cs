@@ -7,7 +7,7 @@ using CompanyCam.Objects;
 
 namespace CompanyCam.Services
 {
-    public class CompanyCamService
+    public class CompanyCamService : IDisposable
     {
         public CompanyCamRequestOptions Options { get; set; }
         public HttpClient Client;
@@ -17,10 +17,11 @@ namespace CompanyCam.Services
             Options = options;
 
             var url = $"https://api.companycam.com/v2/"; // set the URL for the API
-
+            
             this.Client = new HttpClient()
             {
                 BaseAddress = new System.Uri(url)
+                
             };
             this.SetHeaders();
         }
@@ -39,6 +40,18 @@ namespace CompanyCam.Services
             if (!response.IsSuccessStatusCode)
             {
                 throw new CompanyCamException(response.StatusCode.ToString(), new Exception(response.ReasonPhrase));
+            }
+        }
+
+        public void Dispose()
+        {
+            try
+            {
+                this.Client.Dispose();
+            }
+            finally
+            {
+                GC.SuppressFinalize(this);
             }
         }
     }

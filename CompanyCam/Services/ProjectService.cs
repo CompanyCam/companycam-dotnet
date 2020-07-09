@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using CompanyCam.Builders;
 using CompanyCam.Models;
-using CompanyCam.Objects;
 
 namespace CompanyCam.Services
 {
     public class ProjectService : CompanyCamService
     {
         public ProjectService(CompanyCamRequestOptions options = null) : base(options) { }
-        
+
         /// <summary>
         /// Get all project for company
         /// </summary>
@@ -53,7 +50,11 @@ namespace CompanyCam.Services
         public async Task<Project> Create(Project project)
         {
             this.SetHeaders();
-            var response = await Client.PostAsJsonAsync("projects", project);
+            var response = await Client.PostAsJsonAsync("projects",
+                new ProjectWrapper
+                {
+                    project = project
+                });
             HandleResponse(response);
             var result = await response.Content.ReadAsAsync<Project>();
 
