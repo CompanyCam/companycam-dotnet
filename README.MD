@@ -19,7 +19,7 @@ System.Net.Http (4.3.3 or newer)
 
 ## General Use
 
-Before making any call, you must set your API key and user email. 
+Before making any call, you must set your API key and user email.
 
 Use the following code before any calls are made.
 
@@ -73,8 +73,6 @@ public static class TestConfiguration
 .NET Standard 2.0
 
 
-## Authors
-
-
 ## License
 
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
