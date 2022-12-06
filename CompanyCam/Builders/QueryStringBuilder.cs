@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 
 namespace CompanyCam.Builders
@@ -22,8 +23,8 @@ namespace CompanyCam.Builders
         public static string GetQueryString(object obj)
         {
             var properties = from p in obj.GetType().GetProperties()
-                where p.GetValue(obj, null) != null && p.Name != "projectId"
-                select p.Name + "=" + HttpUtility.UrlEncode(p.GetValue(obj, null).ToString());
+                             where p.GetValue(obj, null) != null && p.Name != "projectId"
+                             select p.GetCustomAttribute<Newtonsoft.Json.JsonPropertyAttribute>().PropertyName + "=" + HttpUtility.UrlEncode(p.GetValue(obj, null).ToString());
 
             return String.Join("&", properties.ToArray());
         }
